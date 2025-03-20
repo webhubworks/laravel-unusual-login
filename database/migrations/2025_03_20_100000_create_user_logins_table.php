@@ -8,10 +8,13 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('laravel_unusual_login_table', function (Blueprint $table) {
+        Schema::create('user_logins', function (Blueprint $table) {
             $table->id();
 
-            // add fields
+            $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
+
+            $table->string('ip_address');
+            $table->string('user_agent');
 
             $table->timestamps();
         });

@@ -8,6 +8,7 @@ use WebhubWorks\UnusualLogin\Commands\UnusualLoginCommand;
 
 class UnusualLoginServiceProvider extends PackageServiceProvider
 {
+
     public function configurePackage(Package $package): void
     {
         /*
@@ -18,8 +19,19 @@ class UnusualLoginServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-unusual-login')
             ->hasConfigFile()
+            ->hasMigrations([
+                '2025_03_20_100000_create_user_logins_table'
+            ])
+            ->runsMigrations();
+            /*
             ->hasViews()
-            ->hasMigration('create_laravel_unusual_login_table')
-            ->hasCommand(UnusualLoginCommand::class);
+            ->hasCommand(UnusualLoginCommand::class);*/
+    }
+
+    public function bootingPackage(): void
+    {
+        parent::bootingPackage();
+
+        $this->app->register(UnusualLoginEventServiceProvider::class);
     }
 }

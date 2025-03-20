@@ -20,33 +20,19 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 You can install the package via composer:
 
 ```bash
-composer require marventhieme/laravel-unusual-login
+composer require webhubworks/laravel-unusual-login
 ```
 
-You can publish and run the migrations with:
+You can run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-unusual-login-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-unusual-login-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-unusual-login-views"
+php artisan vendor:publish --tag="unusual-login-config"
 ```
 
 ## Usage

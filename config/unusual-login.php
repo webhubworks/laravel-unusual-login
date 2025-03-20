@@ -1,6 +1,5 @@
 <?php
 
-// config for Webhub/UnusualLogin
 return [
-
+    'unusual-login-detected-notification' => \WebhubWorks\UnusualLogin\Notifications\UnusualLoginDetectedNotification::class,
 ];
