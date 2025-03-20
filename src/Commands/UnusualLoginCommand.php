@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace WebhubWorks\UnusualLogin\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class UnusualLoginCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-unusual-login';
 
     public $description = 'My command';
 

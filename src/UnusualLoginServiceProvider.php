@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace WebhubWorks\UnusualLogin;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use WebhubWorks\UnusualLogin\Commands\UnusualLoginCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class UnusualLoginServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,10 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('laravel-unusual-login')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_migration_table_name_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasMigration('create_laravel_unusual_login_table')
+            ->hasCommand(UnusualLoginCommand::class);
     }
 }
