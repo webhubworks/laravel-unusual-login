@@ -2,9 +2,9 @@
 
 namespace WebhubWorks\UnusualLogin\Events;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use WebhubWorks\UnusualLogin\DTOs\CheckData;
 
 class UnusualLoginDetected
 {
@@ -12,7 +12,7 @@ class UnusualLoginDetected
     use Dispatchable;
 
     public function __construct(
-        public Model $user,
+        public CheckData $checkData,
     ) {
         //
     }

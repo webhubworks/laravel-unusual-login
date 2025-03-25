@@ -20,7 +20,8 @@ class UnusualLoginServiceProvider extends PackageServiceProvider
             ->name('laravel-unusual-login')
             ->hasConfigFile()
             ->hasMigrations([
-                '2025_03_20_100000_create_user_logins_table'
+                '2025_03_20_100000_create_user_logins_table',
+                '2025_03_20_100001_create_user_login_attempts_table',
             ])
             ->runsMigrations();
             /*

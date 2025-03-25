@@ -4,13 +4,13 @@ namespace WebhubWorks\UnusualLogin\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Jenssegers\Agent\Agent;
+use WebhubWorks\UnusualLogin\DTOs\CheckData;
 
 class UnusualLoginDetectedNotification extends Notification
 {
     public function __construct(
-        public string $platform,
-        public string $browser,
-        public string $version,
+        public CheckData $checkData,
     ) {
     }
 
@@ -21,10 +21,14 @@ class UnusualLoginDetectedNotification extends Notification
 
     public function toMail($notifiable): MailMessage
     {
+        $userAgent = new Agent();
+        $userAgent->setUserAgent($this->checkData->currentUserAgent);
+
         $userAgentData = [
-            __('Platform').': '.$this->platform,
-            __('Browser').': '.$this->browser,
-            __('Version').': '.$this->version,
+            __('Platform').': '.$userAgent->platform(),
+            __('Browser').': '.$userAgent->browser(),
+            __('Version').': '.$userAgent->version($userAgent->browser()),
+            __('Timezone').': '.$this->checkData->loggedInAt->format("Y-m-d H:i:s T"),
         ];
 
         return (new MailMessage)
