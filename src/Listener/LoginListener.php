@@ -5,10 +5,9 @@ namespace WebhubWorks\UnusualLogin\Listener;
 use Exception;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Pipeline\Pipeline;
-use Jenssegers\Agent\Agent;
+use InvalidArgumentException;
 use WebhubWorks\UnusualLogin\DTOs\CheckData;
 use WebhubWorks\UnusualLogin\Events\UnusualLoginDetected;
 use WebhubWorks\UnusualLogin\Models\UserLogin;
@@ -41,6 +40,9 @@ class LoginListener
 
         $checks = config('unusual-login.checks');
         $threshold = config('unusual-login.threshold');
+        if(! is_int($threshold)) {
+            throw new InvalidArgumentException('Threshold must be an integer');
+        }
 
         /** @var CheckData $checkData */
         $checkData = app(Pipeline::class)

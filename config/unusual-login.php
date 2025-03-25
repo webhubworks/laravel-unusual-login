@@ -23,6 +23,8 @@ return [
      * Threshold to trigger an unusual login event.
      * This value is the sum of all checks' scores.
      * If threshold is reached, UnusualLoginDetected::class is dispatched.
+     *
+     * Must be an integer.
      */
     'threshold' => 50,
 
