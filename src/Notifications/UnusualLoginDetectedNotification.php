@@ -28,6 +28,7 @@ class UnusualLoginDetectedNotification extends Notification
             __('Platform').': '.$userAgent->platform(),
             __('Browser').': '.$userAgent->browser(),
             __('Version').': '.$userAgent->version($userAgent->browser()),
+            __('Login attempts').': '.$this->checkData->loginAttempts,
             __('Timezone').': '.$this->checkData->loggedInAt->format("Y-m-d H:i:s T"),
         ];
 

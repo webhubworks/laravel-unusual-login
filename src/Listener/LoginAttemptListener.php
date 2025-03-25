@@ -9,12 +9,13 @@ class LoginAttemptListener
 {
     public function handle(Attempting $event): void
     {
-        $identifier = $event->credentials[config('unusual-login.user_identifies_via')] ?? null;
+        $identifier = $event->credentials[config('unusual-login.login_attempts.user_identifies_via')] ?? null;
 
         if(! $identifier) {
             return;
         }
 
+        /** @var UserLoginAttempt $userLoginAttempt */
         $userLoginAttempt = UserLoginAttempt::where([
             'identifier' => $identifier,
         ])->first();
@@ -22,6 +23,14 @@ class LoginAttemptListener
         if(! $userLoginAttempt) {
             UserLoginAttempt::create([
                 'identifier' => $identifier,
+                'attempts' => 1,
+            ]);
+
+            return;
+        }
+        
+        if( $userLoginAttempt->updated_at->diffInMinutes(now()) > config('unusual-login.login_attempts.reset_login_attempts_after_minutes')) {
+            $userLoginAttempt->update([
                 'attempts' => 1,
             ]);
 

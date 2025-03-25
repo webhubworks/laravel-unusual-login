@@ -23,7 +23,7 @@ class LoginListener
     {
         $user = $event->user;
         $loginAttempts = UserLoginAttempt::query()
-            ->where('identifier', $user->{config('unusual-login.user_identifies_via')})
+            ->where('identifier', $user->{config('unusual-login.login_attempts.user_identifies_via')})
             ->first()?->attempts ?? 0;
 
         $currentIpAddress = request()->ip();
@@ -104,7 +104,7 @@ class LoginListener
     private function resetUserLoginAttempts(Authenticatable $user): void
     {
         UserLoginAttempt::query()
-            ->where('identifier', $user->{config('unusual-login.user_identifies_via')})
+            ->where('identifier', $user->{config('unusual-login.login_attempts.user_identifies_via')})
             ->each(function (UserLoginAttempt $attempt) use ($user) {
                 $attempt->delete();
             });
