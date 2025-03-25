@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Pipeline\Pipeline;
 use InvalidArgumentException;
+use WebhubWorks\UnusualLogin\Concerns\WorksWithLoginAttempts;
 use WebhubWorks\UnusualLogin\DTOs\CheckData;
 use WebhubWorks\UnusualLogin\Events\UnusualLoginDetected;
 use WebhubWorks\UnusualLogin\Models\UserLogin;
@@ -15,15 +16,15 @@ use WebhubWorks\UnusualLogin\Models\UserLoginAttempt;
 
 class LoginListener
 {
+    use WorksWithLoginAttempts;
+
     /**
      * @throws Exception
      */
     public function handle(Login $event): void
     {
         $user = $event->user;
-        $loginAttempts = UserLoginAttempt::query()
-            ->where('identifier', $user->{config('unusual-login.login_attempts.user_identifies_via')})
-            ->first()?->attempts ?? 0;
+        $loginAttempts = $this->getLoginAttempts($user);
 
         $currentIpAddress = request()->ip();
         $currentUserAgent = request()->userAgent();
@@ -104,10 +105,27 @@ class LoginListener
 
     private function resetUserLoginAttempts(Authenticatable $user): void
     {
+        $identifier = $this->getUserIdentifiesVia();
+        if(! $identifier) {
+            return;
+        }
+
         UserLoginAttempt::query()
-            ->where('identifier', $user->{config('unusual-login.login_attempts.user_identifies_via')})
+            ->where('identifier', $user->{$identifier})
             ->each(function (UserLoginAttempt $attempt) use ($user) {
                 $attempt->delete();
             });
+    }
+
+    private function getLoginAttempts(Authenticatable $user): int
+    {
+        $identifier = $this->getUserIdentifiesVia();
+        if(! $identifier) {
+            return 0;
+        }
+
+        return UserLoginAttempt::query()
+            ->where('identifier', $user->{$identifier})
+            ->first()?->attempts ?? 0;
     }
 }

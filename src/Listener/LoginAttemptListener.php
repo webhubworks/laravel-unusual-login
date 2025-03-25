@@ -3,14 +3,16 @@
 namespace WebhubWorks\UnusualLogin\Listener;
 
 use Illuminate\Auth\Events\Attempting;
+use WebhubWorks\UnusualLogin\Concerns\WorksWithLoginAttempts;
 use WebhubWorks\UnusualLogin\Models\UserLoginAttempt;
 
 class LoginAttemptListener
 {
+    use WorksWithLoginAttempts;
+
     public function handle(Attempting $event): void
     {
-        $identifier = $event->credentials[config('unusual-login.login_attempts.user_identifies_via')] ?? null;
-
+        $identifier = $this->getUserIdentifiesVia();
         if(! $identifier) {
             return;
         }
@@ -29,7 +31,8 @@ class LoginAttemptListener
             return;
         }
 
-        if( $userLoginAttempt->updated_at->diffInMinutes(now()) > config('unusual-login.login_attempts.reset_login_attempts_after_minutes')) {
+        $resetLoginAttemptsAfterMinutes = $this->getResetLoginAttemptsAfterMinutes();
+        if( $userLoginAttempt->updated_at->diffInMinutes(now()) > $resetLoginAttemptsAfterMinutes) {
             $userLoginAttempt->update([
                 'attempts' => 1,
             ]);

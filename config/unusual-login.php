@@ -16,7 +16,10 @@ return [
     'checks' => [
         \WebhubWorks\UnusualLogin\Checks\IpAddressDiffers::withScore(25),
         \WebhubWorks\UnusualLogin\Checks\UserAgentDiffers::withScore(25),
-        \WebhubWorks\UnusualLogin\Checks\MaxLoginAttempts::withScore(50)->noMoreThan(2),
+        \WebhubWorks\UnusualLogin\Checks\MaxLoginAttempts::withScore(50)
+            ->userIdentifiesVia('email')
+            ->resetLoginAttemptsAfterMinutes(60 * 24)
+            ->noMoreThan(2),
     ],
 
     /**
@@ -27,18 +30,4 @@ return [
      * Must be an integer.
      */
     'threshold' => 50,
-
-    'login_attempts' => [
-        /**
-         * The field, with which the user identifies
-         * and the app attempts to log in.
-         */
-        'user_identifies_via' => 'email',
-
-        /**
-         * In case a login fails and the user tries after a long time,
-         * we should not consider the previous attempts.
-         */
-        'reset_login_attempts_after_minutes' => 60 * 60 * 24, // 24 hours
-    ],
 ];

@@ -4,7 +4,7 @@ namespace WebhubWorks\UnusualLogin;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use WebhubWorks\UnusualLogin\Commands\UnusualLoginCommand;
+use WebhubWorks\UnusualLogin\Commands\PurgeLoginAttemptsCommand;
 
 class UnusualLoginServiceProvider extends PackageServiceProvider
 {
@@ -23,6 +23,7 @@ class UnusualLoginServiceProvider extends PackageServiceProvider
                 '2025_03_20_100000_create_user_logins_table',
                 '2025_03_20_100001_create_user_login_attempts_table',
             ])
+            ->hasCommand(PurgeLoginAttemptsCommand::class)
             ->runsMigrations();
             /*
             ->hasViews()
