@@ -56,7 +56,6 @@ class LoginListener
             ->through($checks)
             ->thenReturn();
 
-        ray($checkData);
         if($checkData->totalScore >= $threshold) {
             UnusualLoginDetected::dispatch($checkData);
 
