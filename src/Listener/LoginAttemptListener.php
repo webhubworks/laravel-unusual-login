@@ -28,7 +28,7 @@ class LoginAttemptListener
 
             return;
         }
-        
+
         if( $userLoginAttempt->updated_at->diffInMinutes(now()) > config('unusual-login.login_attempts.reset_login_attempts_after_minutes')) {
             $userLoginAttempt->update([
                 'attempts' => 1,
