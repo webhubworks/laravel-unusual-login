@@ -19,12 +19,12 @@ class LoginAttemptListener
 
         /** @var UserLoginAttempt $userLoginAttempt */
         $userLoginAttempt = UserLoginAttempt::where([
-            'identifier' => $identifier,
+            'identifier' => $event->credentials[$identifier],
         ])->first();
 
         if(! $userLoginAttempt) {
             UserLoginAttempt::create([
-                'identifier' => $identifier,
+                'identifier' => $event->credentials[$identifier],
                 'attempts' => 1,
             ]);
 
