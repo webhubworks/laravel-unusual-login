@@ -2,6 +2,7 @@
 
 namespace WebhubWorks\UnusualLogin;
 
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use WebhubWorks\UnusualLogin\Commands\PurgeLoginAttemptsCommand;
@@ -24,10 +25,15 @@ class UnusualLoginServiceProvider extends PackageServiceProvider
                 '2025_03_20_100001_create_user_login_attempts_table',
             ])
             ->hasCommand(PurgeLoginAttemptsCommand::class)
-            ->runsMigrations();
-            /*
-            ->hasViews()
-            ->hasCommand(UnusualLoginCommand::class);*/
+            ->runsMigrations()
+            ->hasInstallCommand(function(InstallCommand $command) {
+                $command
+                    ->publishConfigFile()
+                    ->publishMigrations()
+                    ->endWith(function(InstallCommand $command) {
+                        $command->info('Please go through the config before running the migrations.');
+                    });
+            });
     }
 
     public function bootingPackage(): void

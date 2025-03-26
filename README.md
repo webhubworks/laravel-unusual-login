@@ -6,20 +6,26 @@ You can install the package via composer:
 composer require webhubworks/laravel-unusual-login
 ```
 
-You can run the migrations with:
+You can publish the config and migration files with:
+
+```bash
+php artisan unusual-login:install
+```
+
+Finally, you can run the migrations with:
 
 ```bash
 php artisan migrate
 ```
 
-You can publish the config file with:
+Alternatively, you can publish the config file only with:
 
 ```bash
 php artisan vendor:publish --tag="unusual-login-config"
 ```
 
 ## Usage
-This package works under the hood and listens to the `Illuminate\Auth\Events\Attempting` and `Illuminate\Auth\Events\Login` event. \
+This package listens to the `Illuminate\Auth\Events\Attempting` and `Illuminate\Auth\Events\Login` events. \
 On the `Login` event it will run through the checks defined in the config file. \
 If the specified threshold is reached, the package will fire the `Webhubworks\LaravelUnusualLogin\Events\UnusualLoginDetected` event. \
 Additionally, you may specify a notification the package will automatically send out.
