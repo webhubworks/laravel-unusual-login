@@ -11,6 +11,6 @@ class UnusualLogin extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'unusual-login';
+        return \WebhubWorks\UnusualLogin\UnusualLogin::class;
     }
 }
