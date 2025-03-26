@@ -21,13 +21,15 @@ class UnusualLogin {
      */
     protected int $threshold = 0;
 
-    public function checks(array $checks): self
+    public static function checks(array $checks): self
     {
-        $this->ensureCheckInstances($checks);
+        $self = new static();
 
-        $this->checks = array_merge($this->checks, $checks);
+        $self->ensureCheckInstances($checks);
 
-        return $this;
+        $self->checks = array_merge($self->checks, $checks);
+
+        return $self;
     }
 
     public function threshold(int $threshold): self
