@@ -30,7 +30,7 @@ class UnusualLoginServiceProvider extends PackageServiceProvider
                 $command
                     ->publishConfigFile()
                     ->publishMigrations()
-                    ->publish('unusual-login-provider')
+                    ->copyAndRegisterServiceProviderInApp()
                     ->endWith(function(InstallCommand $command) {
                         $command->info('Please go through the config before running the migrations.');
                     });
