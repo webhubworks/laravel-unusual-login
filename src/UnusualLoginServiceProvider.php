@@ -37,6 +37,12 @@ class UnusualLoginServiceProvider extends PackageServiceProvider
             });
     }
 
+    public function packageRegistered(): void
+    {
+        $this->app->singleton(UnusualLogin::class);
+        $this->app->alias(UnusualLogin::class, UnusualLogin::class);
+    }
+
     public function bootingPackage(): void
     {
         parent::bootingPackage();
