@@ -13,6 +13,7 @@ use WebhubWorks\UnusualLogin\DTOs\CheckData;
 use WebhubWorks\UnusualLogin\Events\UnusualLoginDetected;
 use WebhubWorks\UnusualLogin\Models\UserLogin;
 use WebhubWorks\UnusualLogin\Models\UserLoginAttempt;
+use WebhubWorks\UnusualLogin\UnusualLogin;
 
 class LoginListener
 {
@@ -39,11 +40,8 @@ class LoginListener
             ]);
         }
 
-        $checks = config('unusual-login.checks');
-        $threshold = config('unusual-login.threshold');
-        if(! is_int($threshold)) {
-            throw new InvalidArgumentException('Threshold must be an integer');
-        }
+        $checks = UnusualLogin::getChecks()->toArray();
+        $threshold = UnusualLogin::getThreshold();
 
         /** @var CheckData $checkData */
         $checkData = app(Pipeline::class)

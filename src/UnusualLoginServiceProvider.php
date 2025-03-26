@@ -24,11 +24,13 @@ class UnusualLoginServiceProvider extends PackageServiceProvider
                 '2025_03_20_100000_create_user_logins_table',
                 '2025_03_20_100001_create_user_login_attempts_table',
             ])
+            ->publishesServiceProvider('UnusualLoginChecksServiceProvider')
             ->hasCommand(PurgeLoginAttemptsCommand::class)
             ->hasInstallCommand(function(InstallCommand $command) {
                 $command
                     ->publishConfigFile()
                     ->publishMigrations()
+                    ->publish('unusual-login-provider')
                     ->endWith(function(InstallCommand $command) {
                         $command->info('Please go through the config before running the migrations.');
                     });

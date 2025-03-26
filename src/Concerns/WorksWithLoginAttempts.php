@@ -3,15 +3,14 @@
 namespace WebhubWorks\UnusualLogin\Concerns;
 
 use WebhubWorks\UnusualLogin\Checks\MaxLoginAttempts;
+use WebhubWorks\UnusualLogin\UnusualLogin;
 
 trait WorksWithLoginAttempts
 {
     private function getUserIdentifiesVia(): ?string
     {
-        $checks = config('unusual-login.checks');
-
         /** @var MaxLoginAttempts $maxLoginAttemptsCheck */
-        $maxLoginAttemptsCheck = collect($checks)->first(function($check) {
+        $maxLoginAttemptsCheck = UnusualLogin::getChecks()->first(function($check) {
             return $check instanceof MaxLoginAttempts;
         });
 
@@ -20,10 +19,8 @@ trait WorksWithLoginAttempts
 
     private function getResetLoginAttemptsAfterMinutes(): int
     {
-        $checks = config('unusual-login.checks');
-
         /** @var MaxLoginAttempts $maxLoginAttemptsCheck */
-        $maxLoginAttemptsCheck = collect($checks)->first(function($check) {
+        $maxLoginAttemptsCheck = UnusualLogin::getChecks()->first(function($check) {
             return $check instanceof MaxLoginAttempts;
         });
 
