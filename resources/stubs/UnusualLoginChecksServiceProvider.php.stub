@@ -2,6 +2,7 @@
 
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use UnusualLogin;
 
 class UnusualLoginChecksServiceProvider extends ServiceProvider
 {
@@ -12,7 +13,7 @@ class UnusualLoginChecksServiceProvider extends ServiceProvider
          * Those checks a run through a pipeline, so make sure to `return $next($data)` at the end of each check.
          * Each check has a score, which is added up to determine if an unusual login is detected.
          */
-        \WebhubWorks\UnusualLogin\UnusualLogin::checks([
+        UnusualLogin::checks([
             \WebhubWorks\UnusualLogin\Checks\IpAddressDiffers::withScore(25),
             \WebhubWorks\UnusualLogin\Checks\UserAgentDiffers::withScore(25),
             \WebhubWorks\UnusualLogin\Checks\MaxLoginAttempts::withScore(50)

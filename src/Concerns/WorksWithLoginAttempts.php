@@ -3,7 +3,7 @@
 namespace WebhubWorks\UnusualLogin\Concerns;
 
 use WebhubWorks\UnusualLogin\Checks\MaxLoginAttempts;
-use WebhubWorks\UnusualLogin\UnusualLogin;
+use WebhubWorks\UnusualLogin\Facades\UnusualLogin;
 
 trait WorksWithLoginAttempts
 {

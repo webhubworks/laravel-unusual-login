@@ -7,13 +7,12 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Pipeline\Pipeline;
-use InvalidArgumentException;
 use WebhubWorks\UnusualLogin\Concerns\WorksWithLoginAttempts;
 use WebhubWorks\UnusualLogin\DTOs\CheckData;
 use WebhubWorks\UnusualLogin\Events\UnusualLoginDetected;
+use WebhubWorks\UnusualLogin\Facades\UnusualLogin;
 use WebhubWorks\UnusualLogin\Models\UserLogin;
 use WebhubWorks\UnusualLogin\Models\UserLoginAttempt;
-use WebhubWorks\UnusualLogin\UnusualLogin;
 
 class LoginListener
 {
