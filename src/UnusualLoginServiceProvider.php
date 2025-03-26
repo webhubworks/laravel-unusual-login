@@ -25,7 +25,6 @@ class UnusualLoginServiceProvider extends PackageServiceProvider
                 '2025_03_20_100001_create_user_login_attempts_table',
             ])
             ->hasCommand(PurgeLoginAttemptsCommand::class)
-            ->runsMigrations()
             ->hasInstallCommand(function(InstallCommand $command) {
                 $command
                     ->publishConfigFile()

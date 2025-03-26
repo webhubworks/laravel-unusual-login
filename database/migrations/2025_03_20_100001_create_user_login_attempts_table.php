@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('user_login_attempts', function (Blueprint $table) {
             $table->id();
 
-            $table->string('identifier');
+            $table->string('identifier')->comment('What the user logs in with: email, username, etc.');
             $table->integer('attempts')->default(0);
 
             $table->timestamps();

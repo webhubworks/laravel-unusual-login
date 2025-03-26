@@ -12,6 +12,9 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('user_id')->unique();
+            // Optionally, use one of those as reference to the users table:
+            // $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
+            // $table->foreignUuid('user_id')->unique()->constrained()->cascadeOnDelete();
 
             $table->string('ip_address');
             $table->string('user_agent');
