@@ -4,6 +4,7 @@ namespace WebhubWorks\UnusualLogin\Listener;
 
 use Illuminate\Auth\Events\Attempting;
 use WebhubWorks\UnusualLogin\Concerns\WorksWithLoginAttempts;
+use WebhubWorks\UnusualLogin\Events\MaxLoginAttemptsDetected;
 use WebhubWorks\UnusualLogin\Models\UserLoginAttempt;
 
 class LoginAttemptListener
@@ -23,23 +24,24 @@ class LoginAttemptListener
         ])->first();
 
         if(! $userLoginAttempt) {
-            UserLoginAttempt::create([
+            $userLoginAttempt = UserLoginAttempt::create([
                 'identifier' => $event->credentials[$identifier],
-                'attempts' => 1,
+                'attempts' => 0,
             ]);
-
-            return;
         }
 
         $resetLoginAttemptsAfterMinutes = $this->getResetLoginAttemptsAfterMinutes();
         if( $userLoginAttempt->updated_at->diffInMinutes(now()) > $resetLoginAttemptsAfterMinutes) {
             $userLoginAttempt->update([
-                'attempts' => 1,
+                'attempts' => 0,
             ]);
-
-            return;
         }
 
         $userLoginAttempt->increment('attempts');
+        $userLoginAttempt->refresh();
+
+        if($userLoginAttempt->attempts >= config('unusual-login.max_login_attempts')) {
+            MaxLoginAttemptsDetected::dispatch($userLoginAttempt->identifier, $userLoginAttempt->attempts);
+        }
     }
 }

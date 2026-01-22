@@ -19,7 +19,7 @@ class UnusualLoginChecksServiceProvider extends ServiceProvider
             \WebhubWorks\UnusualLogin\Checks\MaxLoginAttempts::withScore(50)
                 ->userIdentifiesVia('email')
                 ->resetLoginAttemptsAfterMinutes(60 * 24)
-                ->noMoreThan(2),
+                ->noMoreThan(config('unusual-login.max_login_attempts')),
         ])
 
             /**

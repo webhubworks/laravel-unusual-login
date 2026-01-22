@@ -9,4 +9,9 @@ return [
      */
     // 'notification' => \WebhubWorks\UnusualLogin\Notifications\UnusualLoginDetectedNotification::class,
 
+    /**
+     * Maximum number of login attempts.
+     * When this number is reached, the even MaxLoginAttemptsDetected::class is dispatched.
+     */
+    'max_login_attempts' => (int) env('MAX_LOGIN_ATTEMPTS', 5),
 ];
