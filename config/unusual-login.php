@@ -15,7 +15,7 @@ return [
 
     /**
      * Maximum number of login attempts.
-     * When this number is reached, the event MaxLoginAttemptsDetected::class is dispatched.
+     * When this number is exceeded, the event MaxLoginAttemptsDetected::class is dispatched.
      */
     'max_login_attempts' => (int) env('UNUSUAL_LOGIN_MAX_LOGIN_ATTEMPTS', 5),
 

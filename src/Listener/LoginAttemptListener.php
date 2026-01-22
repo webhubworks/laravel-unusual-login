@@ -37,7 +37,7 @@ class LoginAttemptListener
         $userLoginAttempt->increment('attempts');
         $userLoginAttempt->refresh();
 
-        if($userLoginAttempt->attempts >= config('unusual-login.max_login_attempts')) {
+        if($userLoginAttempt->attempts > config('unusual-login.max_login_attempts')) {
             MaxLoginAttemptsDetected::dispatch($userLoginAttempt->identifier, $userLoginAttempt->attempts);
         }
     }
