@@ -20,6 +20,11 @@ class LoginListener
      */
     public function handle(Login $event): void
     {
+        $guards = config('unusual-login.guards');
+        if (! in_array($event->guard, $guards)) {
+            return;
+        }
+
         $user = $event->user;
         $loginAttempts = $this->getLoginAttempts($user);
 

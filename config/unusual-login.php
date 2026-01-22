@@ -3,6 +3,11 @@
 return [
 
     /**
+     * The authentication guards to monitor for unusual login activity.
+     */
+    'guards' => explode(',', env('UNUSUAL_LOGIN_GUARDS', 'web')),
+
+    /**
      * The field used to identify the user during login attempts.
      */
     'user_identifier_field' => env('UNUSUAL_LOGIN_USER_IDENTIFIER_FIELD', 'email'),

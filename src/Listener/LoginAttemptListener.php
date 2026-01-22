@@ -10,6 +10,11 @@ class LoginAttemptListener
 {
     public function handle(Attempting $event): void
     {
+        $guards = config('unusual-login.guards');
+        if (! in_array($event->guard, $guards)) {
+            return;
+        }
+        
         $identifier = $event->credentials[config('unusual-login.user_identifier_field')] ?? null;
         if(! $identifier) {
             return;
