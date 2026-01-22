@@ -2,7 +2,7 @@
 
 namespace WebhubWorks\UnusualLogin\DTOs;
 
-use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Contracts\Auth\Authenticatable;
 use WebhubWorks\UnusualLogin\Models\UserLogin;
 
@@ -20,7 +20,7 @@ class CheckData
 
     public int $totalScore;
 
-    public Carbon $loggedInAt;
+    public CarbonInterface $loggedInAt;
 
     public static function make(
         Authenticatable $user,
@@ -29,7 +29,7 @@ class CheckData
         UserLogin       $lastUserLogin,
         int             $loginAttempts,
         int             $totalScore,
-        Carbon          $loggedInAt,
+        CarbonInterface          $loggedInAt,
     ): self
     {
         $self = new self();
