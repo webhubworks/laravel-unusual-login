@@ -3,20 +3,17 @@
 namespace WebhubWorks\UnusualLogin\Commands;
 
 use Illuminate\Console\Command;
-use WebhubWorks\UnusualLogin\Concerns\WorksWithLoginAttempts;
 use WebhubWorks\UnusualLogin\Models\UserLoginAttempt;
 
 class PurgeLoginAttemptsCommand extends Command
 {
-    use WorksWithLoginAttempts;
-
     public $signature = 'unusual-login:purge-login-attempts';
 
     public $description = 'Purges all UserLoginAttempt entries older than the configured minutes.';
 
     public function handle(): int
     {
-        $resetLoginAttemptsAfterMinutes = $this->getResetLoginAttemptsAfterMinutes();
+        $resetLoginAttemptsAfterMinutes = config('unusual-login.reset_login_attempts_after_minutes');
 
         $loginAttempts = UserLoginAttempt::query()
             ->where('updated_at', '<', now()->subMinutes($resetLoginAttemptsAfterMinutes))
